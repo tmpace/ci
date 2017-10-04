@@ -1,0 +1,4 @@
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.5.0

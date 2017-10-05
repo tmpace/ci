@@ -19,6 +19,9 @@ jobs:
     steps:
       - checkout
 
+      # we have to do this to build and push our image
+      - setup_remote_docker
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -35,3 +38,10 @@ jobs:
         
       # run tests!
       - run: npm test
+
+      # build and push new docker image
+      - run: |
+        TAG=0.1.$CIRCLE_BUILD_NUM
+        docker build -f docker/node.dockerfile -t tmpace/ci-example:$TAG .
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        docker push tmpace/ci-example:$TAG

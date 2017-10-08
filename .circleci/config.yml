@@ -43,8 +43,7 @@ jobs:
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
           DOCKERFILE=tmpace/ci-example:$TAG
-          echo '$DOCKERFILE'
-          echo 'export DOCKERFILE=$DOCKERFILE' >> $BASH_ENV
+          export DOCKERFILE=$DOCKERFILE >> $BASH_ENV
           docker build -f docker/node.dockerfile -t $DOCKERFILE .
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker push tmpace/ci-example:$TAG

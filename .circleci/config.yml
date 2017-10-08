@@ -42,9 +42,11 @@ jobs:
       # build and push new docker image
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -f docker/node.dockerfile -t tmpace/ci-example:$TAG .
+          DOCKERFILE=tmpace/ci-example:$TAG
+          echo 'export DOCKERFILE=$DOCKERFILE' >> $BASH_ENV
+          docker build -f docker/node.dockerfile -t $DOCKERFILE .
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker push tmpace/ci-example:$TAG
       
       # Run our deploy script
-      - run: TAG=$tag npm run deploy
+      - run: npm run deploy

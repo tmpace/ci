@@ -45,3 +45,6 @@ jobs:
           docker build -f docker/node.dockerfile -t tmpace/ci-example:$TAG .
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker push tmpace/ci-example:$TAG
+      
+      # Run our deploy script
+      - run: TAG=$tag npm run deploy
